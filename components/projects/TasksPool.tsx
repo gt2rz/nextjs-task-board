@@ -2,8 +2,8 @@
 
 import { useEffect } from "react";
 import TaskCard from "./TaskCard";
-import Sortable from 'sortablejs';
-import { on } from "events";
+import Sortable,  { SortableEvent } from 'sortablejs';
+
 
 export default function TasksPool({ pool }: { pool: Pool }) {
     
@@ -16,7 +16,8 @@ export default function TasksPool({ pool }: { pool: Pool }) {
             Sortable.create(element, {
                 group: `shared`,
                 animation: 150,
-                onEnd: (event: CustomEvent) => {
+                onEnd: (event: SortableEvent) => {
+                   
                     const {to, from } = event;
 
                     const taskId = event.item.id.replace('task-', '');

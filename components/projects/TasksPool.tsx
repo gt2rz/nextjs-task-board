@@ -1,71 +1,46 @@
+'use client';
 
+import { useEffect } from "react";
+import TaskCard from "./TaskCard";
+import Sortable from 'sortablejs';
+import { on } from "events";
 
+export default function TasksPool({ pool }: { pool: Pool }) {
+    
+    const poolId = 'pool-' + pool.id;
 
-export default function TasksPool({pool}: {pool: Pool}) {
+    useEffect(() => {
+        const element = document.getElementById(poolId);
+
+        if (element) {
+            Sortable.create(element, {
+                group: `shared`,
+                animation: 150,
+                onEnd: (event: CustomEvent) => {
+                    const {to, from } = event;
+
+                    const taskId = event.item.id.replace('task-', '');
+                    const poolIdFrom = from.id.replace('pool-', '');
+                    const poolIdTo = to.id.replace('pool-', '');
+                   
+                    console.log(`Task ${taskId} moved from pool ${poolIdFrom} to pool ${poolIdTo}`);
+                }
+            });
+        }
+    }, []);
+
     return (
-        <section className="w-[400px] h-fit bg-slate-100 p-2">
+        <section  className="w-[400px] h-fit bg-slate-100 p-2">
             <header className="flex justify-between items-center">
                 <h6 className="font-bold text-gray-800">{pool.title}</h6>
                 <button className="px-4 py-2 bg-gray-50 text-black rounded-lg border">+</button>
             </header>
 
-            {pool.tasks.map((task) => (
-                <div key={`task-${task.id}`} className="bg-white p-4 rounded-lg mt-2">
-                    {/* Pasar a componente */}
-                    <header className="flex justify-between items-center mb-4">
-                        <span className="flex items-center space-x-2">
-                            <input type="checkbox" name="" id="" className="w-4 h-4" />
-                            <h6 className="font-bold text-gray-800 cursor-pointer">{task.title}</h6>
-                        </span>
-                        <button className="px-2 py-1 bg-transparent text-gray-800 text-xs rounded-lg border font-extrabold">
-                            ...
-                        </button>
-                    </header>
-
-                    <p className="text-gray-500">
-                        {/* {task.description.slice(0, 200)}... */}
-                        {task.description.length > 200 ? `${task.description.slice(0, 200)}...` : task.description}
-                    </p>
-
-                    <div className="flex justify-between items-center my-4">
-                        <div className="flex items-center">
-                            {task.tags.map((tag) => (
-                                <span key={`tag-${tag.id}`} className="px-2 py-1 text-gray-800 text-xs rounded-lg mr-1" style={{ background: tag.color }}>{tag.title}</span>   
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="flex items-center my-4">
-                        { task.comments.length > 0 && (
-                            <div className="flex items-center">
-                                {
-                                    task.comments.length > 0 && task.comments.map((comment, index) => (
-                                        <div key={`comment-${comment.id}`}>
-                                            <img src={comment.avatar} alt="avatar" className={`w-6 h-6 rounded-full border ${ index > 0 ? '-ml-2': '' }`} />
-                                        </div>
-                                    ))
-                                }
-                                <span className="text-gray-800 text-sm ml-1">{task.comments.length} comments</span>
-                            </div>
-                        )}
-                    </div>
-
-                    <div className="flex justify-between items-center mt-2">
-                        <div className="flex items-center text-gray-800 text-xs p-1 rounded-md">
-                            <progress value={task.progress} max="1" className="w-24 h-2 rounded-md "></progress>
-                            <span className="ml-1">{Math.round(task.progress * 100)}%</span>
-                        </div>
-
-                        {/* Pasar a componente, validar si existe dia, hora y minutos yu mostrar lo correspondiente */}
-                        <div className="flex items-center text-gray-800 text-xs bg-slate-100 p-1 rounded-md">
-                            <span> Est.</span>
-                            <span className="mr-1">{task.estimations.days}d</span>
-                            <span className="mr-1">{task.estimations.hours}h</span>
-                            <span>{task.estimations.minutes}m</span>
-                        </div>
-                    </div>
-                </div>
-            ))}
+            <div id={poolId} className="mt-4">
+                {pool.tasks.map((task) => (
+                    <TaskCard key={`task-${task.id}`} task={task} />
+                ))}
+            </div>
 
             <footer>
                 <button className="w-full bg-gray-50 text-black text-sm py-2 mt-4 rounded-lg">Add Task</button>

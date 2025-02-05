@@ -2,6 +2,8 @@ export const taskBoardMock = [
     {
         "id": 1,
         "title": "Reseach",
+        "projectId": 1,
+        "sort": 1,
         "tasks": [
             {
                 "id": 1,
@@ -76,6 +78,8 @@ export const taskBoardMock = [
     {
         "id": 2,
         "title": "Desing",
+        "projectId": 1,
+        "sort": 2,
         "tasks": [
             {
                 "id": 3,
@@ -191,18 +195,24 @@ export const taskBoardMock = [
     {
         "id": 4,
         "title": "In Review",
+        "projectId": 1,
+        "sort": 3,
         "tasks": [
         ],
     },
     {
         "id": 3,
         "title": "Development",
+        "projectId": 1,
+        "sort": 4,
         "tasks": [
         ],
     },
     {
         "id": 5,
         "title": "Fixing",
+        "projectId": 1,
+        "sort": 5,
         "tasks": [
         ],
     }

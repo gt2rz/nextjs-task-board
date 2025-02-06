@@ -5,7 +5,12 @@ import TaskCard from "./TaskCard";
 import Sortable,  { SortableEvent } from 'sortablejs';
 import { saveMoveTask } from "@/services/tasksBoard";
 
-export default function TasksPool({ pool }: { pool: Pool }) {
+interface TaskPoolProps {
+    pool: Pool;
+    projectId: string;
+}
+
+export default function TasksPool({ pool, projectId }: TaskPoolProps) {
     
     const poolId = 'pool-' + pool.id;
 
@@ -16,7 +21,7 @@ export default function TasksPool({ pool }: { pool: Pool }) {
         const poolIdTo = to.id.replace('pool-', '');
 
         // Save the move task
-        await saveMoveTask(Number(taskId), Number(poolIdFrom), Number(poolIdTo));
+        await saveMoveTask(projectId, Number(taskId), Number(poolIdFrom), Number(poolIdTo));
     }
 
     useEffect(() => {

@@ -12,7 +12,9 @@ export default function TaskCardComments({ comments }: { comments: Comment[] }) 
                             </div>
                         ))
                     }
-                    <span className="text-gray-800 text-sm ml-1">{comments.length} comments</span>
+                    <span className="text-gray-500 text-sm ml-1 font-semibold">
+                        {comments.length} {comments.length > 1 ? 'comments' : 'comment'}
+                    </span>
                 </div>
             )}
         </div>

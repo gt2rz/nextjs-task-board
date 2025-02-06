@@ -1,18 +1,37 @@
 'use client';
 
-import { taskBoardMock } from '@/mocks/taskBoard';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TasksPool from './TasksPool';
+import { getTaskBoard } from '@/services/tasksBoard';
 
-export default function TaskBoard() {
+export default function TaskBoard({projectId}: {projectId: string}) {
+    const [pools, setPools] = useState<Pool[]>([]);
     
-    const [pools, setPools] = useState<Pool[]>(taskBoardMock);
+    useEffect(() => {
+        const fetchData = async () => {
+          const data = await getTaskBoard(projectId);
+          return data;
+        };
+
+        fetchData().then(data => {
+            console.log('Data', data);
+            
+            setPools(data)
+        });
+        
+
+      }, []);
+
 
     return (
         <section className="w-full h-full flex gap-4 overflow-auto">
-            {pools.map((pool) => (
+            {pools.length > 0 ? pools.map((pool) => (
                 <TasksPool key={`pool-${pool.id}`} pool={pool} />
-            ))}
+            )) : (
+                <div className="w-full h-full flex items-center justify-center">
+                    <p className="text-gray-800">There are no set tasks</p>
+                </div>
+            )}
         </section>
     );
 }

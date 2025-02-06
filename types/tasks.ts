@@ -26,5 +26,7 @@ interface Task {
 interface Pool {
     id: number;
     title: string;
+    projectId: string;
+    sort: number;
     tasks: Task[];
 }

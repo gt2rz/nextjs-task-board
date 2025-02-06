@@ -3,11 +3,21 @@
 import { useEffect } from "react";
 import TaskCard from "./TaskCard";
 import Sortable,  { SortableEvent } from 'sortablejs';
-
+import { saveMoveTask } from "@/services/tasksBoard";
 
 export default function TasksPool({ pool }: { pool: Pool }) {
     
     const poolId = 'pool-' + pool.id;
+
+    const handleMoveTask = async (event: SortableEvent) => {
+        const {to, from } = event;
+        const taskId = event.item.id.replace('task-', '');
+        const poolIdFrom = from.id.replace('pool-', '');
+        const poolIdTo = to.id.replace('pool-', '');
+
+        // Save the move task
+        await saveMoveTask(Number(taskId), Number(poolIdFrom), Number(poolIdTo));
+    }
 
     useEffect(() => {
         const element = document.getElementById(poolId);
@@ -17,14 +27,7 @@ export default function TasksPool({ pool }: { pool: Pool }) {
                 group: `shared`,
                 animation: 150,
                 onEnd: (event: SortableEvent) => {
-                   
-                    const {to, from } = event;
-
-                    const taskId = event.item.id.replace('task-', '');
-                    const poolIdFrom = from.id.replace('pool-', '');
-                    const poolIdTo = to.id.replace('pool-', '');
-                   
-                    console.log(`Task ${taskId} moved from pool ${poolIdFrom} to pool ${poolIdTo}`);
+                   handleMoveTask(event);                    
                 }
             });
         }

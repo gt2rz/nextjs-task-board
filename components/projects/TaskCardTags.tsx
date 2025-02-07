@@ -1,5 +1,6 @@
+import { TaskTagType } from "@/types/tasks";
 
-export default function TaskCardTags({tags}: {tags: Tag[]}) {
+export default function TaskCardTags({tags}: {tags: TaskTagType[]}) {
     return (
         <div className="flex justify-between items-center my-4">
             <div className="flex items-center">

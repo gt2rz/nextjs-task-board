@@ -3,9 +3,10 @@
 import { useEffect, useState } from 'react';
 import TasksPool from './TasksPool';
 import { getTaskBoard } from '@/services/tasksBoard';
+import { TaskPoolType } from '@/types/tasks';
 
 export default function TaskBoard({projectId}: {projectId: string}) {
-    const [pools, setPools] = useState<Pool[]>([]);
+    const [pools, setPools] = useState<TaskPoolType[]>([]);
     
     useEffect(() => {
         const fetchData = async () => {

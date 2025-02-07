@@ -1,6 +1,6 @@
-import { Comment } from "@/types";
+import { TaskCommentType } from "@/types/tasks";
 
-export default function TaskCardComments({ comments }: { comments: Comment[] }) {
+export default function TaskCardComments({ comments }: { comments: TaskCommentType[] }) {
     return (
         <>
             {comments?.length > 0 && (

@@ -3,8 +3,9 @@ import TaskCardEstimations from "./TaskCardEstimations";
 import TaskCardHeader from "./TaskCardHeader";
 import TaskCardProgress from "./TaskCardProgress";
 import TaskCardTags from "./TaskCardTags";
+import { TaskType } from "@/types/tasks";
 
-export default function TaskCard({ task }: { task: Task }) {
+export default function TaskCard({ task }: { task: TaskType }) {
     return (
         <div id={`task-${task.id}`} className="bg-white p-4 rounded-lg mt-2">
             <TaskCardHeader title={task.title} />

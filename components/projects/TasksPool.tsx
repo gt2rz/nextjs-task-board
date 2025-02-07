@@ -4,9 +4,10 @@ import { useEffect } from "react";
 import TaskCard from "./TaskCard";
 import Sortable,  { SortableEvent } from 'sortablejs';
 import { saveMoveTask } from "@/services/tasksBoard";
+import { TaskPoolType } from "@/types/tasks";
 
 interface TaskPoolProps {
-    pool: Pool;
+    pool: TaskPoolType;
     projectId: string;
 }
 

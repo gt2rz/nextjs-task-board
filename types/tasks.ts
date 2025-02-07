@@ -1,4 +1,4 @@
-interface Tag {
+export type TaskTagType = {
     id: number;
     title: string;
     color: string;
@@ -6,33 +6,33 @@ interface Tag {
     textColor?: string;
 }
 
-interface Comment {
+export type TaskCommentType = {
     id: number;
     author: string;
     avatar: string;
     content: string;
 }
 
-interface Estimations {
+export type TaskEstimationsType = {
     days?: number;
     hours?: number;
     minutes?: number;
 }
 
-interface Task {
+export type TaskType = {
     id: number;
     title: string;
     description: string;
-    tags: Tag[];
-    comments: Comment[];
+    tags: TaskTagType[];
+    comments: TaskCommentType[];
     progress: number;
-    estimations: Estimations;
+    estimations: TaskEstimationsType;
 }
 
-interface Pool {
+export type TaskPoolType = {
     id: number;
     title: string;
     projectId: string;
     sort: number;
-    tasks: Task[];
+    tasks: TaskType[];
 }
